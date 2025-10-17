@@ -1,0 +1,27 @@
+# Streamlit Configuration for Chat Dashboard Demo
+# Theme and layout settings to optimize the live coding experience
+
+[theme]
+# Use light theme for better visibility on projectors
+primaryColor = "#0066CC"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F5F5F5"
+textColor = "#333333"
+font = "sans serif"
+
+[client]
+# Show menu and toolbar for demo purposes
+showErrorDetails = true
+toolbarMode = "developer"
+
+[logger]
+level = "info"
+
+[server]
+# Optimize for live demo
+maxUploadSize = 200
+enableXsrfProtection = true
+
+[browser]
+# Better for remote presentations
+gatherUsageStats = false
