@@ -21,37 +21,52 @@ This is a **Streamlit chat dashboard** built using React mental models translate
 pip install -r requirements.txt
 ```
 
-### 2. Run the Demo
+### 2. Run During the Talk
 
 ```bash
-# Option A: Live coding starting point
+# Start with this blank template and live-code during your talk
 streamlit run app.py
-
-# Option B: View a completed version
-streamlit run app_v1_basic.py       # Step 1: Basic
-streamlit run app_v2_timestamps.py  # Step 2: With timestamps
-streamlit run app_v3_styled.py      # Step 3: Styled bubbles
 ```
+
+### 3. Reference the Completed Versions
+
+```bash
+# View Step 1 result (if you need to jump ahead or recover)
+streamlit run app_v1_basic.py       # Step 1: Basic chat + Clear button
+streamlit run app_v2_timestamps.py  # Step 2: With timestamps + newest-first
+streamlit run app_v3_styled.py      # Step 3: Styled message bubbles
+```
+
+### 4. Before Your Talk
+
+**⚠️ Important:** Read `TESTING.md` for:
+- Pre-talk setup checklist (15-20 min)
+- Individual version testing
+- Common issues and solutions
+- Live demo flow guide (which version to show when)
+- Troubleshooting
 
 ---
 
 ## Demo Structure
 
-### Step 1: Basic Chat Dashboard (`app_v1_basic.py`)
-**Duration:** ~2–3 minutes
+### Step 1: Build Basic Chat Dashboard (Live Coding with `app.py`)
+**Duration:** ~3–5 minutes
 
-🎯 **What you'll demonstrate:**
-- State management using `st.session_state` (like React's `useState`)
-- Rendering messages in a list
-- Input box with send button
-- Restart/rerun behavior (Streamlit's equivalent to React re-renders)
+🎯 **What you'll live-code:**
+1. Initialize state: `if "messages" not in st.session_state: st.session_state.messages = []`
+2. Add message list rendering: `for msg in st.session_state.messages: st.write(msg)`
+3. Add input box and send button: `st.text_input()` + `st.button("Send")`
+4. Add the send logic: append to state and `st.rerun()`
 
 💬 **Talk point:**
 > "This is how a React dev thinks: header, list, input. In Python, it's still the same structure—just using Streamlit instead of JSX."
 
+**Escape hatch:** If live coding gets stuck, run `streamlit run app_v1_basic.py` to show the result
+
 ---
 
-### Step 2: Add Timestamps (`app_v2_timestamps.py`)
+### Step 2: Add Timestamps (Show `app_v2_timestamps.py`)
 **Duration:** ~2–3 minutes
 
 🎯 **What you'll demonstrate:**
@@ -62,18 +77,28 @@ streamlit run app_v3_styled.py      # Step 3: Styled bubbles
 💬 **Talk point:**
 > "We just enriched our state structure. React devs do this all the time—now it's Python."
 
+**How to show it:**
+- Either switch to `app_v2_timestamps.py` in terminal (safe)
+- Or live-code the changes if Step 1 went smooth
+
 ---
 
-### Step 3: Visual Polish (`app_v3_styled.py`)
+### Step 3: Visual Polish (Show `app_v3_styled.py`)
 **Duration:** ~2–3 minutes
 
 🎯 **What you'll demonstrate:**
 - Conditional styling with inline HTML/CSS
 - Component extraction (the `render_message()` function)
 - WhatsApp-like chat bubbles with role-based colors
+- Role toggle to simulate user/assistant conversation
 
 💬 **Talk point:**
 > "Same React mental model—components, conditionals, styling. Different syntax."
+
+**How to show it:**
+- Switch to `app_v3_styled.py` in terminal
+- Demo sending messages as both "User" and "Assistant"
+- Point out the color/alignment differences
 
 ---
 
@@ -81,13 +106,37 @@ streamlit run app_v3_styled.py      # Step 3: Styled bubbles
 
 | File | Purpose |
 |------|---------|
-| `app.py` | **[USE THIS FOR LIVE CODING]** Starting point—simple chat, ready to evolve |
-| `app_v1_basic.py` | Step 1 result—basic chat dashboard |
-| `app_v2_timestamps.py` | Step 2 result—with timestamps and ordering |
-| `app_v3_styled.py` | Step 3 result—with styled message bubbles |
-| `CLAUDE.md` | **[FOR AI ASSISTANCE]** Project context for Claude Code pair-programming |
+| `app.py` | **[LIVE CODING]** Blank boilerplate—start here and build during talk |
+| `app_v1_basic.py` | **[BACKUP]** Step 1 result—basic chat dashboard (if needed to jump ahead) |
+| `app_v2_timestamps.py` | **[BACKUP]** Step 2 result—with timestamps and ordering |
+| `app_v3_styled.py` | **[BACKUP]** Step 3 result—with styled message bubbles (final demo) |
+| `CLAUDE.md` | **[AI ASSISTANCE]** Project context for Claude Code pair-programming |
+| `TESTING.md` | **[BEFORE DEMO]** Pre-talk checklist, troubleshooting, and demo flow guide |
 | `requirements.txt` | Python dependencies |
 | `.streamlit/config.toml` | Streamlit theme and layout settings |
+
+---
+
+## Recent Improvements ✨
+
+This version includes demo-friendly enhancements:
+
+### User Experience
+- **Input clearing:** Text input clears automatically after sending (no leftover text)
+- **Clear Chat button:** Reset conversations instantly between demo steps
+- **Role toggle (v3):** Switch between User/Assistant to simulate two-way conversations
+- **Better empty state:** Friendly emoji prompts when chat is empty
+
+### Code Quality
+- **Type hints:** Functions include Python type annotations for clarity
+- **Style constants:** Colors and dimensions extracted to config section (like CSS variables)
+- **Improved docstrings:** Each function includes React concept mappings
+- **Better comments:** Inline annotations linking Python code to React concepts
+
+### Documentation
+- **TESTING.md:** Complete pre-talk checklist and troubleshooting guide
+- **Updated README:** References to new testing guide and features
+- **Code clarity:** Every step explained for audience learning
 
 ---
 

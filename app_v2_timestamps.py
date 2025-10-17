@@ -32,7 +32,16 @@ if "messages" not in st.session_state:
 # ============================================================================
 # MESSAGE LIST (newest first, with timestamps)
 # ============================================================================
-st.write("### Messages")
+col_title, col_clear = st.columns([4, 1])
+
+with col_title:
+    st.write("### Messages")
+
+with col_clear:
+    if st.button("🗑️ Clear", use_container_width=True):
+        st.session_state.messages = []
+        st.session_state.message_input = ""
+        st.rerun()
 
 if st.session_state.messages:
     # Reverse to show newest first (like React with array.reverse())
@@ -41,7 +50,7 @@ if st.session_state.messages:
         text = msg_obj["text"]
         st.write(f"**{timestamp}** — {text}")
 else:
-    st.info("No messages yet. Start the conversation!")
+    st.info("💭 No messages yet. Start the conversation!")
 
 # ============================================================================
 # INPUT BOX & SEND BUTTON (now captures timestamp)
@@ -50,7 +59,7 @@ col1, col2 = st.columns([4, 1])
 
 with col1:
     new_message = st.text_input(
-        "Type a message:",
+        "Type a message (press Enter to send):",
         placeholder="Say something...",
         key="message_input"
     )
