@@ -18,6 +18,7 @@ Each iteration translates React mental models into Python.
 """
 
 import streamlit as st
+from datetime import datetime
 
 st.set_page_config(page_title="Chat Dashboard", layout="centered")
 
@@ -49,12 +50,12 @@ with col2:
         st.rerun()
 
 # ============================================================================
-# MESSAGE LIST RENDERING (React: conditional rendering + map)
+# MESSAGE LIST RENDERING (React: derived rendering with reverse)
 # ============================================================================
 if st.session_state.messages:
-    # Messages exist — render list (like messages.map())
-    for i, msg in enumerate(st.session_state.messages, 1):
-        st.write(f"**{i}.** {msg}")
+    # Derived rendering: reverse for newest-first (like useMemo)
+    for msg_obj in reversed(st.session_state.messages):
+        st.write(f"**{msg_obj['timestamp']}** — {msg_obj['text']}")
 else:
     # Empty state (React: ternary operator)
     st.info("💭 No messages yet. Start the conversation!")
@@ -74,9 +75,15 @@ with col1:
 with col2:
     # Send button
     if st.button("Send", key="btn_send"):
-        # React equivalent: handleSend()
+        # React equivalent: handleSend() with timestamp
         if user_input.strip():
-            st.session_state.messages.append(user_input)
+            # Rich state: object with text and timestamp (like React)
+            timestamp = datetime.now().strftime("%H:%M:%S")
+            message_obj = {
+                "text": user_input,
+                "timestamp": timestamp
+            }
+            st.session_state.messages.append(message_obj)
             st.session_state.input_value = ""
             st.rerun()
 
