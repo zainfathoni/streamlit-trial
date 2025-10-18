@@ -177,6 +177,7 @@ Each React file shows the mental model for that step. Use these as reference whe
 | File | Purpose |
 |------|---------|
 | `CLAUDE.md` | **[AI ASSISTANCE]** Project context for Claude Code pair-programming |
+| `REACT_REFERENCE_GUIDE.md` | **[HOW TO USE]** Guide for using React references during live demo |
 | `TESTING.md` | **[BEFORE DEMO]** Pre-talk checklist, troubleshooting, and demo flow guide |
 | `requirements.txt` | Python dependencies |
 | `.streamlit/config.toml` | Streamlit theme and layout settings |
