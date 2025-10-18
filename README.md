@@ -48,10 +48,35 @@ streamlit run app_v3_styled.py      # Step 3: Styled message bubbles
 
 ---
 
+## How to Use the React References
+
+When describing intent to Claude Code during the demo:
+
+1. **Show the React code** to the audience (or keep it visible)
+2. **Describe the React mental model** in React terms (useState, map, onClick, etc.)
+3. **Tell Claude Code**: "Translate this React logic into Python/Streamlit"
+4. **Point out the mappings** after Claude generates Python code
+
+Example prompt for Step 1:
+```
+"Look at this React code in react_step_1_basic.jsx.
+I'm thinking about:
+- useState([]) for messages → st.session_state
+- messages.map() for rendering → for loop
+- onClick handlers → st.button() + st.rerun()
+- Input with onKeyPress → st.text_input() with key
+
+Build this same logic in Python/Streamlit for app.py"
+```
+
+---
+
 ## Demo Structure
 
 ### Step 1: Build Basic Chat Dashboard (Live Coding with `app.py`)
 **Duration:** ~3–5 minutes
+
+**Reference:** `react_step_1_basic.jsx`
 
 🎯 **What you'll live-code:**
 1. Initialize state: `if "messages" not in st.session_state: st.session_state.messages = []`
@@ -62,6 +87,12 @@ streamlit run app_v3_styled.py      # Step 3: Styled message bubbles
 💬 **Talk point:**
 > "This is how a React dev thinks: header, list, input. In Python, it's still the same structure—just using Streamlit instead of JSX."
 
+**React→Python Mappings to Highlight:**
+- `useState([])` → `st.session_state`
+- `.map()` → `for` loop
+- `.append()` → state update + rerun
+- `onClick` + `onKeyPress` → `st.button()` + `st.text_input()`
+
 **Escape hatch:** If live coding gets stuck, run `streamlit run app_v1_basic.py` to show the result
 
 ---
@@ -69,16 +100,24 @@ streamlit run app_v3_styled.py      # Step 3: Styled message bubbles
 ### Step 2: Add Timestamps (Show `app_v2_timestamps.py`)
 **Duration:** ~2–3 minutes
 
+**Reference:** `react_step_2_timestamps.jsx`
+
 🎯 **What you'll demonstrate:**
 - Store structured data (dicts in session state, like useState with objects)
-- Derive rendering with `reversed()` (like React's `useMemo` or derived state)
+- Derive rendering with `reversed()` (like React's derived state)
 - Add temporal info with `datetime`
 
 💬 **Talk point:**
 > "We just enriched our state structure. React devs do this all the time—now it's Python."
 
+**React→Python Mappings to Highlight:**
+- Rich state objects: `{ text, timestamp }` → dict with keys
+- `new Date().toLocaleTimeString()` → `datetime.now().strftime("%H:%M:%S")`
+- `[...messages].reverse().map()` → `reversed(st.session_state.messages)` in for loop
+- Accessing object properties: `msg.timestamp` → `msg_obj["timestamp"]`
+
 **How to show it:**
-- Either switch to `app_v2_timestamps.py` in terminal (safe)
+- Switch to `app_v2_timestamps.py` in terminal (safest option)
 - Or live-code the changes if Step 1 went smooth
 
 ---
@@ -86,30 +125,57 @@ streamlit run app_v3_styled.py      # Step 3: Styled message bubbles
 ### Step 3: Visual Polish (Show `app_v3_styled.py`)
 **Duration:** ~2–3 minutes
 
+**Reference:** `react_step_3_styled.jsx`
+
 🎯 **What you'll demonstrate:**
-- Conditional styling with inline HTML/CSS
-- Component extraction (the `render_message()` function)
+- Component extraction (React component → Python function)
+- Conditional styling based on props (className → inline CSS)
 - WhatsApp-like chat bubbles with role-based colors
 - Role toggle to simulate user/assistant conversation
 
 💬 **Talk point:**
 > "Same React mental model—components, conditionals, styling. Different syntax."
 
+**React→Python Mappings to Highlight:**
+- Component: `<MessageBubble props />` → `render_message(args)` function
+- Conditional classnames: `isUser ? 'bubble--user' : 'bubble--assistant'` → ternary inline styles
+- Inline styles: `style={{backgroundColor: color}}` → `f"style='background-color: {color}'"`
+- Props: `role={msg.role}` → function parameter
+- Select/dropdown: `<select onChange>` → `st.radio()`
+
 **How to show it:**
 - Switch to `app_v3_styled.py` in terminal
-- Demo sending messages as both "User" and "Assistant"
+- Demo sending messages as both "User" and "Assistant" to show the role toggle
 - Point out the color/alignment differences
 
 ---
 
 ## File Guide
 
+### Live Coding
 | File | Purpose |
 |------|---------|
 | `app.py` | **[LIVE CODING]** Blank boilerplate—start here and build during talk |
-| `app_v1_basic.py` | **[BACKUP]** Step 1 result—basic chat dashboard (if needed to jump ahead) |
+
+### React References (Use When Prompting Claude Code)
+Each React file shows the mental model for that step. Use these as reference when describing intent to Claude Code.
+
+| File | Purpose |
+|------|---------|
+| `react_step_1_basic.jsx` | **[REFERENCE]** State + render + send button (useState, mapping, onClick) |
+| `react_step_2_timestamps.jsx` | **[REFERENCE]** Rich state objects + derived rendering + temporal data |
+| `react_step_3_styled.jsx` | **[REFERENCE]** Component extraction + conditional styling + props |
+
+### Python Backup Versions (Escape Hatches)
+| File | Purpose |
+|------|---------|
+| `app_v1_basic.py` | **[BACKUP]** Step 1 result—basic chat dashboard |
 | `app_v2_timestamps.py` | **[BACKUP]** Step 2 result—with timestamps and ordering |
 | `app_v3_styled.py` | **[BACKUP]** Step 3 result—with styled message bubbles (final demo) |
+
+### Documentation & Config
+| File | Purpose |
+|------|---------|
 | `CLAUDE.md` | **[AI ASSISTANCE]** Project context for Claude Code pair-programming |
 | `TESTING.md` | **[BEFORE DEMO]** Pre-talk checklist, troubleshooting, and demo flow guide |
 | `requirements.txt` | Python dependencies |
